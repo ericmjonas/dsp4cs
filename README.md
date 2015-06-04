@@ -46,8 +46,7 @@ processing without the soldering”
 ## Protocols and technologies
 * Amplitude Modulation, Frequency Modulation, single-sideband, etc. 
 * More modern modulation schemes like QAM for DTV 
-wired protocols and encodings : LVDS signalling, 8b/10B for gigabit ethernet,
-* PCI express, and the like
+* wired protocols and encodings : LVDS signalling, 8b/10B for gigabit ethernet, PCI express, and the like
 * The classic phone system, modems, modern protocols like GSM  
 * WiFi 
 * GPS
