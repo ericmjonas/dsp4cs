@@ -70,6 +70,10 @@ at time zero, as
 x[n]\delta[n] = x[0]\delta[n]
 \]
 
+The Dirac delta function plays a similar role in the continuous-time domain.
+\[
+\int_{-\infty}^\infty f(x) \delta(x) dx = f(0)
+\]
 
 \section{Analytic Signals}
 Most signals in the real world are real-valued. 
@@ -100,32 +104,119 @@ We could just add stuff together
 
 We could have a little circuit and describe it with an ODE
 
-\begin{itemize}
-\item Memoryless 
-\item invertable
-\item causal
-\item stability 
-\item linearity
-\item time-invariance 
-\end{itemize}
+
+\subsection{Memory}
+A \textit{memoryless} system has no state -- the output $y[n]$ can only be a function
+of the current value of the signal $x[n]$. The system 
+\[
+y[n] = x[n]^2
+\]
+is an example of a memoryless system, whereas the system which sums all previous
+inputs (an accumulator) 
+\[
+y[n] = \sum_{k=-\infty}^n x[k]
+\]
+is not. 
+
+
+\subsection{invertability}
+
+\subsection{causality}
+A system is causal if the value of $y(t)$ only depends on the values
+of $x(\tau)$, $\tau < t$. Thus all memoryless systems are causal, 
+but the accumulator described above is also causal. 
+
+
+\subsection{ stability }
+A system is stable if bounded inputs produce bounded outputs. The accumulator
+above is not stable. 
+
+\subsection{Linearity}
+This is one of the most important properties a system can have. We're
+all familiar with linearity so I'll just state that 
+\begin{enumerate}
+\item The response to $x_1(t) + x_2(t)$ is $y_1(t) + y_2(t)$
+\item The response to $a x(t)$ is $a y(t)$ where $a \in \mathbb{C}$. 
+\end{enumerate}
+
+This gives rise to superposition! A ton of real-world systems are linear, 
+and will make up the majority of topics in this survey. 
+
+\subsection{Time Invariance}
+Time-invariance is another crucial property. Simply stated, a
+system is time-invariant if a time-shit in the input
+produces an equivalent time-shift in the output. 
+
+If $y(t)$ is the response of a system to an input $x(t)$, the system
+is time-invariant if, when fed an input $x(t-t_0)$ its output is $y(t
+- t_0)$.
+ 
+Many physical systems are time invariant, and even those that aren't
+can often be modeled locally as time-invariant. 
+\fxwarning{Give example}
+
 
 \section{Convolution}
-What is convolution. 
+
+
+\subsection{Impulse representation of a signal}
+We can write any input signal as a sum of weighted impulse
+functions. 
+
+For a linear system, if we know the input response to $x[n]$ then we
+know the response to $ax[n]$ is just $ay[n]$. We also 
+knwo that 
+
+Thus we can represent the output of a system as a
+sum of its outputs to a buch of input impulse functions,
+scaled appropriately. 
+
+
+
+
+
+
+
+All linear, time-invariant systems can be expressed as the 
+convolution of an input signal $x(t)$ with a special function, 
+the \textit{impulse reseponse} of that system, $h(t)$
+
+First we will review convolution in the continuous-time
+case
 
 \[
 y(t) = \int_{-\infty}^{\infty} x(\tau) h(t - \tau) d\tau
 \]
+
+and the discrete-time case:
+\[
+y[n] = \sum_{k=-\infty}^{\infty} x[k] h[n -k]
+\]
+
 
 ``Flip and slide'' 
 
 Asymptotic complexity 
 
 \subsection{The linear algebra view}
-Convolution as matrix multiplication (don't actually do this)
+A Toeplitz matrix has constant diagonals
+\[ %\arraycolsep=4pt
+ G = 
+ \begin{bmatrix*}[r]
+    1 \\
+    2&1\\
+   -1&2&1\\
+     &-1&2&1\\
+     &&-1&2&1\\
+     &&&-1&2&1\\
+     &&&&&&\ddots\\
+     &&&&&&&\ddots\\
+     &&&&&&&&\ddots\\
+     &&&&&&&&&1
+  \end{bmatrix*}
+\]
 
-
-\section{Dirac Delta Function}
-
-Basis of an LTI system
+With sufficient padding, the convolution of a signal $x[n]$ with
+$h[n]$ can be represented as multiplication by a toeplitz matrix. 
 
 \end{document}
