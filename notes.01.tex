@@ -1,23 +1,74 @@
+\input{header.tex}
 
 \title{Signals and LTI Systems}
-
-
-\section{Introduction}
+\begin{document}
+\maketitle
 
 
 
 \section{What is a signal }
-Continuous time
-Discrete time
 
-Examples -- audio, RF, etc. 
+A signal is a function of one or more independent variables, such as
+$x(t)$, where we generally let $t$ range over $(-\infty, \infty)$. We
+often think of such signals as representing some observation of the
+world -- the voltage on a wire, the air pressure at a microphone, or
+electromagnetic vibrations in the vacuum.
 
-Even and oddness
+We will work with signals in continuous time, and represent them by
+$x(t)$, $t \in \mathbb{R}$. We will also work with signals in discrete
+time, $x[n]$, $n \in \mathbb{Z}$. Note that the behavior of these two
+different classes of signals can be both subtle and profound, and
+transitioning between one and the other implactes some of the most
+classic results in signal processing, such as the Shannon/Nyquist
+sampling theorem. However, a large number of the properties that apply
+to discrete signals apply to continuous-time signals and vice versa,
+so we will often state properties of one that apply equally to the
+other. 
 
 
+A great deal of ink has been spilled about which signals are
+in some sense admissable, but we will gloss over most of those
+issues here. We define the energy in a signal to be
 
-\section{Periodic Signals}
-Phase
+\[
+E_\infty = \int_{-\infty}^{\infty} |x(t)|^2 dt
+\]
+
+and note that many signals we work with will have infinite energy. 
+There are mathematical formalisms you can use to handle all of this, 
+but they are beyond the scope of this survey course. 
+
+\subsection{Periodic Signals}
+We will often deal with periodic signals, where
+\[
+x(t) = x(t+T)
+\]
+
+The canonical examples being sines and cosines. We will become intimately 
+familiar with the periodic complex exponential signal, 
+\[
+x(t) = e^{j \omega t}
+\]
+which we remember from Kindergarden can be expressed via Euler's equation 
+as 
+\[
+e^{j \omega_0 t} = \cos \omega_0 t + j \sin \omega_0 t
+\]
+
+Note that things become slightly more complex in the discrete case. We can
+define
+\fxwarning{Add discrete time example}
+
+\subsection{the unit impulse}
+The unit impulse, shows up in many areas of electrical
+engineering, physics, and probability. We will first consider the 
+discrete time version
+
+The discrete-time unit impulse can be used to ``sample'' a signal
+at time zero, as
+\[
+x[n]\delta[n] = x[0]\delta[n]
+\]
 
 
 \section{Analytic Signals}
@@ -35,17 +86,46 @@ a real one, why do we do it a certain way?
 
 4. Negative Frequency
 
-\section{Linearity} 
-Linear algebra rears its ugly haed 
+\section{Systems}
+
+We speak of systems, which take in a signal $x(t)$ and produce a signal $y(t)$. WE
+draw them like this. 
+
+Electrical engineers and computer scientists can bond over our desire
+to draw boxes and connect them with arrows. It's important to note that
+a system can look at as much of the signal as it wants, but it also
+must produce an output for every time. 
+
+We could just add stuff together
+
+We could have a little circuit and describe it with an ODE
+
+\begin{itemize}
+\item Memoryless 
+\item invertable
+\item causal
+\item stability 
+\item linearity
+\item time-invariance 
+\end{itemize}
 
 \section{Convolution}
-Basic operation of LTI systems
+What is convolution. 
+
+\[
+y(t) = \int_{-\infty}^{\infty} x(\tau) h(t - \tau) d\tau
+\]
 
 ``Flip and slide'' 
 
-Circulant and Toeplitz Matrices
+Asymptotic complexity 
+
+\subsection{The linear algebra view}
+Convolution as matrix multiplication (don't actually do this)
+
 
 \section{Dirac Delta Function}
 
 Basis of an LTI system
 
+\end{document}
