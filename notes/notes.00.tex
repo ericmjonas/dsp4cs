@@ -14,15 +14,14 @@ for you.
 
 Have you taken
 
-A course on signals and systems
-A DSP course
-A stochastic process theory course
-A linear algebra course
-A differential equations course
-
-Have you called fft in the past year
-
-
+\begin{enumerate}
+\item A linear algebra course
+\item A differential equations course
+\item A course on signals and systems
+\item A DSP course
+\item A stochastic process theory course
+\item Have you called fft in the past year
+\end{enumerate}
 
 \section{Introduction}
 The importance of consistent pedagogy -- $x(t)$ vs $x[n]$ 
@@ -37,22 +36,47 @@ I'm not a mathematician, or really even a computer scientist, but rather
 just a guy who wants to build cool shit. 
 
 \section{What we don't cover}
-Only the tiniest bit of control theory
-no stochastic process theory
-no filter design
-No advanced modulation theory
+\begin{itemize}
 
+\item \textbf{Control theory}: Control theory is one of
+  the great successes of 20th century engineering, and has enabled so
+  much of the amazing devices we have today. Laurent Lessard put
+  together a great introduction that I can refer you to if you're
+  interested. There are need connections between control theory and
+  recent active learning work (which we will not talk about) 
+\item \textbf{Stochastic processes}: The real world is stochastic, as is most of your
+  data. Stochastic process theory formalizes this, and is something
+  even CS students should know, as it underlies large swaths of
+  machine learning. That said, LTI systems like those we discuss
+  impact simplistic stochastic processes in about the way you would
+  expect, so there's not a lot of ``surprising'' material here.
+\item \textbf{Filter design}. Of course, once you have this incredible
+  framework for signal processing, you want to then process some
+  signals, and to do this you often ened to engineer filters. This
+  used to be a very deep topic that has been mostly reduced to a
+  series of matlab function calls.
+\item \textbf{ advanced modulation schemes / information theory} The
+  bleeding edge of the PHY layer involves state-of-the-art modulation
+  schemes as well as lots of recent work in coding theory. We skip all
+  of this .
+\end{itemize} 
 
 \section{Format}
-8 lectures
-heavy on background at first
-Lots of neat examples
-If you want supplemental material let me know
+\begin{itemize}
+\item 7 lectures
+\item heavy on background at first
+\item Lots of neat examples (i hope)
+\item If you want supplemental material let me know
+\end{itemize} 
 
 \section{What I hope to achieve}
-1. Get people excited about these problems
-2. in two years you remember enough keywords to intelligently google the right thing and not have the wikipedia page read like gibberish
-3. Realize that computer science has been doing a lot of this stuff
-forever, and that you really do have the background and skills to contribute. 
+\begin{enumerate}
+\item Get people excited about these problems
+\item in two years you remember enough keywords to intelligently
+  google the right thing and not have the wikipedia page scare you
+\item Realize that computer science has been doing a lot of this stuff
+  forever, and that you really do have the background and skills to
+  contribute.
+\end{enumerate} 
 
 \end{document}

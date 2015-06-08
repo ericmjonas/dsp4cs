@@ -38,7 +38,15 @@ and note that many signals we work with will have infinite energy.
 There are mathematical formalisms you can use to handle all of this, 
 but they are beyond the scope of this survey course. 
 
+
+By default we work with complex-valued signals. While
+real-valued signals are far more common in nature, there
+are real-valued linear operators whose eigenvalues
+are not real and thus can complicate intuition and analysis. 
+
+
 \subsection{Periodic Signals}
+
 We will often deal with periodic signals, where
 \[
 x(t) = x(t+T)
@@ -74,21 +82,6 @@ The Dirac delta function plays a similar role in the continuous-time domain.
 \[
 \int_{-\infty}^\infty f(x) \delta(x) dx = f(0)
 \]
-
-\section{Analytic Signals}
-Most signals in the real world are real-valued. 
-
-Physicsists always say ``Well we can just use a complex signal and
-then take the real part'' but
-
-1. Why? 
-
-2. Ok, there are a whole bunch of ways to create a complex signal from
-a real one, why do we do it a certain way? 
-
-3. I and Q -- quadrature signals
-
-4. Negative Frequency
 
 \section{Systems}
 
@@ -160,26 +153,44 @@ can often be modeled locally as time-invariant.
 
 
 \subsection{Impulse representation of a signal}
-We can write any input signal as a sum of weighted impulse
-functions. 
+We can write any input signal as a sum of weighted unit impulse
+functions. This is easiest to see in the discrete time context. 
+Consider a signal with $x[0]=3$, $x[1]=2$, $x[2] = 4$. We can also 
+express this signal as 
+\[
+x[n] = 3\delta[n] + 2\delta[n-1] + 4\delta[n-2]
+\]  
 
-For a linear system, if we know the input response to $x[n]$ then we
-know the response to $ax[n]$ is just $ay[n]$. We also 
-knwo that 
+\[
+x[n] = \sum_{k=-\infty}^\infty x[k]\delta[n-k]
+\]
 
-Thus we can represent the output of a system as a
-sum of its outputs to a buch of input impulse functions,
-scaled appropriately. 
+\subsection{Impulse response and convolution}
+Now, consider a system whose response an impulse at time $k$, 
+that is, $\delta[n-k]$, is $h_k[n]$. If the system is linear,
+than we can compute the response of the system to any input signal
+via
+
+\[
+y[n] = \sum_{k=-\infty}{\infty} x[k] h_k[n]
+\]
+
+Note that if the system is also \textit{time invariant}, then
+$h_k[n] = h[n -k]$, that is the system response to a shifted
+impulse $\delta[n-k]$ is $h[n-k]$. Then the total system
+response to an input $x[n]$ will be: 
+\[
+x[n] = \sum_{k=-\infty}^\infty x[k] h[n-k]
+\]
+
+This is the celebrated convolution operation. We can 
+write this as
+\[
+y[n] = x[n] * h[n]
+\]
 
 
-
-
-
-
-
-All linear, time-invariant systems can be expressed as the 
-convolution of an input signal $x(t)$ with a special function, 
-the \textit{impulse reseponse} of that system, $h(t)$
+\subsection{Continuous-time convolution}
 
 First we will review convolution in the continuous-time
 case
@@ -188,35 +199,38 @@ case
 y(t) = \int_{-\infty}^{\infty} x(\tau) h(t - \tau) d\tau
 \]
 
-and the discrete-time case:
-\[
-y[n] = \sum_{k=-\infty}^{\infty} x[k] h[n -k]
-\]
-
 
 ``Flip and slide'' 
 
-Asymptotic complexity 
+\subsection{Runtime}
+
+For discrete-time convolution, convolving a
+signal $x[n]$ of length $N$ with an impulse response
+$h[n]$ of length $K$ will take $O(NK)$. This 
+may seem trivial but later we will see how to do 
+much better! 
+
 
 \subsection{The linear algebra view}
 A Toeplitz matrix has constant diagonals
 \[ %\arraycolsep=4pt
  G = 
  \begin{bmatrix*}[r]
-    1 \\
-    2&1\\
-   -1&2&1\\
-     &-1&2&1\\
-     &&-1&2&1\\
-     &&&-1&2&1\\
-     &&&&&&\ddots\\
-     &&&&&&&\ddots\\
-     &&&&&&&&\ddots\\
-     &&&&&&&&&1
+    h[0] \\
+    h[1] &h[0]\\
+    h[2] &h[1] & h[0]\\
+    &h[2] &h[1] & h[0]\\
+    &&h[2] &h[1] & h[0]\\
+    &&&h[2] &h[1] & h[0]\\
+    &&&&h[2] &h[1] & h[0]\\
+    &&&&&&\ddots\\
+    &&&&&&\ddots\\
+    &&&&&&&\ddots\\
+    &&&&&&&&1
   \end{bmatrix*}
 \]
 
 With sufficient padding, the convolution of a signal $x[n]$ with
-$h[n]$ can be represented as multiplication by a toeplitz matrix. 
+$h[n]$ can be represented as multiplication by a Toeplitz matrix. 
 
 \end{document}
