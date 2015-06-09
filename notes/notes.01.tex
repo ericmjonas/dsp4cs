@@ -67,10 +67,28 @@ can be expressed as
 e^{j \omega_0 t} = \cos \omega_0 t + j \sin \omega_0 t
 \]
 
-Note that things become slightly more complex in the discrete case. We can
-define
-\fxwarning{Add discrete time example}
+Periodic signals in the discrete case give rise to our
+first example of differeng behavior between discrete and continuous
+time. The complex exponential signal
+\[
+x[n] = e^{j\omega_0 n}
+\]
+has a curious property. Consider the discrete-time complex exponential
+at frequency $\omega_0 + 2\pi$:
+\[
+x[n] = e^{j(\omega_0 + 2\pi) n} =  e^{j\omega_0 n} e^{j2\pi n} = e^{j\omega_0 n}
+\]
 
+Note that the signals at frequencies $\omega_0$ and $\omega_0 + 2\pi$
+are exactly the same!
+
+Note that also, to achieve periodicity of $x[n]$, we must have
+\[
+e^{j\omega_0 n} = e^{j\omega_0 (n + N)}
+\]
+or $e^{j \omega_0 N} = 1$ implying $\omega_0N $ must be a multiple
+of $2\pi$, or there must be an integer $m$ such that $\omega_0 N = 2\pi m$. 
+That is, $\frac{\omega_0}{2\pi}$ must be a rational number! 
 
 \subsection{the unit impulse}
 The unit impulse, shows up in many areas of electrical
@@ -91,17 +109,15 @@ The Dirac delta function plays a similar role in the continuous-time domain.
 \section{Systems}
 
 We speak of systems, which take in a signal $x(t)$ and produce a
-signal $y(t)$. WE draw them like this.
+signal $y(t)$. WE draw them like this. [ draw them]
 
 Electrical engineers and computer scientists can bond over our desire
 to draw boxes and connect them with arrows. It's important to note that
 a system can look at as much of the signal as it wants, but it also
 must produce an output for every time. 
 
-We could just add stuff together. (Draw example)
+We could just add stuff together. Or run them in parallel. Or concatenate. 
 
-We could have a little circuit and describe it with an ODE. 
-\fxwarning{Add ODE Example}
 
 
 \subsection{Memory}
@@ -152,7 +168,7 @@ is time-invariant if, when fed an input $x(t-t_0)$ its output is $y(t
  
 Many physical systems are time invariant, and even those that aren't
 can often be modeled locally as time-invariant. 
-\fxwarning{Give example}
+
 
 
 \section{Convolution}
@@ -198,8 +214,7 @@ y[n] = x[n] * h[n]
 
 \subsection{Continuous-time convolution}
 
-First we will review convolution in the continuous-time
-case
+Convolution in the continuous case proceeds similarly
 
 \[
 y(t) = \int_{-\infty}^{\infty} x(\tau) h(t - \tau) d\tau
@@ -241,5 +256,20 @@ $h[n]$ can be represented as multiplication by a Toeplitz matrix.
 
 Note when we apply this matrix to an impulse, we just
 get a shifted-and-scaled version of the filter.  
+
+\subsection{Convolution for hardware} 
+DSPs were important as convolution at each step requires
+\begin{enumerate}
+\item Load a filter coefficient, $h[n]$
+\item Load a datapoint, $x[n]$
+\item Multiply them 
+\item Save the result in a register
+\end{enumerate}
+
+which is why they had independent data and instruction
+memories (Harvard architecture), index registers that would
+auto-increment (zero-overhead indexing), and hardware
+multiply-accumulate functions in their ALUs. 
+
 
 \end{document}
