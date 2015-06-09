@@ -57,8 +57,12 @@ familiar with the periodic complex exponential signal,
 \[
 x(t) = e^{j \omega t}
 \]
-which we remember from Kindergarden can be expressed via Euler's equation 
-as 
+which, using Euler's formula, 
+\[
+e^j\theta = \cos \theta + j \sin \theta
+\]
+
+can be expressed as 
 \[
 e^{j \omega_0 t} = \cos \omega_0 t + j \sin \omega_0 t
 \]
@@ -66,6 +70,7 @@ e^{j \omega_0 t} = \cos \omega_0 t + j \sin \omega_0 t
 Note that things become slightly more complex in the discrete case. We can
 define
 \fxwarning{Add discrete time example}
+
 
 \subsection{the unit impulse}
 The unit impulse, shows up in many areas of electrical
@@ -85,17 +90,18 @@ The Dirac delta function plays a similar role in the continuous-time domain.
 
 \section{Systems}
 
-We speak of systems, which take in a signal $x(t)$ and produce a signal $y(t)$. WE
-draw them like this. 
+We speak of systems, which take in a signal $x(t)$ and produce a
+signal $y(t)$. WE draw them like this.
 
 Electrical engineers and computer scientists can bond over our desire
 to draw boxes and connect them with arrows. It's important to note that
 a system can look at as much of the signal as it wants, but it also
 must produce an output for every time. 
 
-We could just add stuff together
+We could just add stuff together. (Draw example)
 
-We could have a little circuit and describe it with an ODE
+We could have a little circuit and describe it with an ODE. 
+\fxwarning{Add ODE Example}
 
 
 \subsection{Memory}
@@ -172,7 +178,7 @@ than we can compute the response of the system to any input signal
 via
 
 \[
-y[n] = \sum_{k=-\infty}{\infty} x[k] h_k[n]
+y[n] = \sum_{k=-\infty}^{\infty} x[k] h_k[n]
 \]
 
 Note that if the system is also \textit{time invariant}, then
@@ -232,5 +238,8 @@ A Toeplitz matrix has constant diagonals
 
 With sufficient padding, the convolution of a signal $x[n]$ with
 $h[n]$ can be represented as multiplication by a Toeplitz matrix. 
+
+Note when we apply this matrix to an impulse, we just
+get a shifted-and-scaled version of the filter.  
 
 \end{document}
