@@ -4,21 +4,194 @@
 \begin{document}
 \maketitle
 
+\listoffixmes
+
 Not just another basis
 
 Use example from encyclopedia of mathematics
+\section{A Brief linear algebra review}
+Vector space consists of vectors and of scalars that behave as we would expect. 
+
+You can extend a vector space to an inner product space by defining an 
+inner product, which associates with each pair of vectors a scalar. This
+inner product lets you talk about the angle between two vectors,
+and orthogonality. An inner product must have linearity in the first
+argument, positive-definiteness, and conjugate symmetry. 
+
+This naturally induces a notion of length (a norm). 
+
+Now we can wave our hands and talk about vector spaces of functions, 
+and then define an inner product between two signals. In this case
+we will focus on complex-valued functions, and thus our inner product is
+
+\[
+<x(t), y(t)> = \int_a^b x(t) y^*(t) dt
+\]
+
+We can talk about the projection of one signal along another, just like
+we can talk about the projection of one vector along another. 
 
 
-* Spectral analysis. What is the relationship between the Fourier
-  Transform, the Discrete-Time Fourier Transform, and the FFT? "Why
-  does matlab’s FFT() always give me complex outputs?" forward,
-  inverse transforms.
+\section{Eigenfunctions of LTI systems}
+Reviewing last time, we showed that an LTI system is completely
+characterized by its impulse response, $h(t)$, and that the
+response of an LTI system with impulse response $h(t)$ to an
+input signal $x(t)$ could be computed by convolving $h(t)$ and $x(t)$
 
+\[
+y(t) = \int_{-\infty}^{\infty}h(\tau) x(t-\tau) d\tau
+\]
+
+Consider the response of an LTI system to a complex exponential $e^{st}$, 
+$s \in \mathbb{C}$:
+
+\begin{align}
+y(t) &=  \int_{-\infty}^{\infty}h(\tau) e^{s(t-\tau)} d\tau \\
+     &=  \int_{-\infty}^{\infty}h(\tau) e^{st}e^{-s\tau)} d\tau \\
+     &=  e^{st}\int_{-\infty}^{\infty}h(\tau) e^{-s\tau)} d\tau \\
+     &= e^{st}H(st)\\
+\end{align}
+
+Note that we have applied an LTI system, $L_h$, to a signal, $x(t)$, and
+obtained the same signal $x(t)$ multipled by a constant, which we've written $H(st)$. This should evoke an equation from linera algebra,
+\[
+L_h x = \lambda_{H(st)} x
+\]
+
+We say that the set of complex exponentials are \textit{eigenfunctions} of
+linear time-invariant systems, and the resulting \textit{eigenvalue} $H(st)$ 
+has important and deep meaning. We'll come back to this later.
 
 \section{The Continuous-time Fourier Transform}
+First, do not fear the Fourier transform, especially if you have
+taken linear algebra. Most of what follows is a very natural extension
+of standard ideas from linear algebra (bases, transforms, inner products,
+unitary operators). Your geometric intuition from Euclidian space
+will come in handy! 
+
+
+Colloquially, the Fourier transform converts signals from a
+time-representation to a frequency representation. We often say it
+takes signals from the time domain to the frequency domain. But that
+casual explanation hides the fact that the fourier transform is akin
+to a change in basis. The Fourier transform takes a signal expressed
+in the time domain, where the basis functions are dirac deltas, and
+instead expresses it in the frequency domain, where the basis
+functions are complex exponentials (that is, complex sums of sines and
+cosines).
+
+
+
+
+\[
+X(j\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt
+\]
+
+\[
+x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} X(j\omega) e^{j \omega t} d\omega
+\]
+
+
+\subsection{Examples}
+\subsection{Square pulse / Sinc function}
+
+\[ x(t) =
+  \begin{cases}
+    1  & \quad \text{if } |t| < T_1\\
+    0  & \quad \text{if }  |t| \geq T_1 \\
+  \end{cases}
+\]
+\includegraphics[width=3in]{notes.02.square.pdf}
+
+
+
+gives 
+\[
+X(jw) = \int_{-T_1}^{T_1} e^{-j\omega t} dt = 2 \frac{\sin \omega T_1}{\omega}
+\]
+\includegraphics[width=3in]{notes.02.sinc.pdf}
+
+
+\subsection{Periodic functions}
+Consider a signal whose Fourier transform is 
+\[
+X(j\omega) = 2 \pi \delta(\omega - \omega_0)
+\]
+
+we see
+\[
+x(t) = \frac{1}{2\pi}\int_{-\infty}^{\infty} 2\pi \delta(\omega - \omega_0) e^{j \omega t} d\omega = e^{j\omega_0  t}
+\]
+
+\fxwarning{DO the other direction}
+\fxwarning{Draw pictures}
+
+
+\subsection{Properties}
+We start off with 
+\[ 
+x(t) \ftarrow X(j\omega)
+\]
+\[ 
+y(t) \ftarrow Y(j\omega)
+\]
+
+Linearity : 
+\[
+ax(t) + by(t) \ftarrow aX(j\omega) + bY(j\omega)
+\]
+
+Time-shifting: 
+\[
+x(t - t_0) \ftarrow e^{-j\omega t_0}X(j\omega)
+\]
+
+\subsubsection{conjugation and conjugate symmetry}
+\subsection{Convolution property}
+Consider 
+\[
+y(t) = \int_{-\infty}^{\infty}x(\tau) h(t-\tau) d\tau
+\]
+We want $Y(j\omega)$ which is 
+\begin{align}
+Y(j\omega) &= \mathscr{F} \{ y(t) \} \\
+&= \int_{-\infty}^{\infty} \left[ \int_{-\infty}^{\infty}x(\tau) h(t-\tau) d\tau \right]  e^{-j \omega t} dt \\
+& = \int_{-\infty}^{\infty} x(\tau) \left[ \int_{-\infty}^{\infty}h(t-\tau) e^{-j\omega t} dt \right]  d\tau && \text{Swap order of integration}\\
+& = \int_{-\infty}^{\infty} x(\tau) \left[ H(j\omega) e^{-j\omega \tau} \right] d\tau  && \text{Bracketed term via time-shifting}\\
+& = H(j\omega) \int_{-\infty}^{\infty} x(\tau) e^{-j\omega \tau} d\tau \\
+& = H(j\omega) X(j\omega) 
+\end{align}
+
+
+And thus we arrive at the celebrated property, 
+
+
+\[
+y(t) = h(t) * x(t) \ftarrow Y(j\omega) = H(j\omega) X(j\omega)  
+\]
+
 
 
 \section{The Discrete-time Fourier Transform}
+\[
+x[n] = \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega}) e^{j\omega n} d\omega
+\]
+
+\[
+X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}
+\]
+
+\fxwarning{Why is this so different? Explain it} 
+
+\section{An introduction to Filtering}
+\fxwarning{Give audio example}
+
+
+
+
+
+\section{Magnitude and Phase}
+
 
 
 \section{The Discrete Fourier Transform}
