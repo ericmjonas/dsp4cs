@@ -127,7 +127,7 @@ cos(\omega_0 t) = \frac{e^{j\omega_0 t} + e^{-j\omega_0 t}}{2}
 
 We can use linearity above and arrive at 
 \[
-\mathscr{F} \{ cos(\omega_0 t) \} = \pi \delta(\omega - omega_0) + \pi \delta(\omega - \omega_0)
+\mathscr{F} \{ cos(\omega_0 t) \} = \pi \delta(\omega - \omega_0) + \pi \delta(\omega - \omega_0)
 \]
 
 
@@ -175,16 +175,62 @@ y(t) = h(t) * x(t) \ftarrow Y(j\omega) = H(j\omega) X(j\omega)
 \]
 
 
+\subsection{Persaval}
+If $x(t)$ and $X(j\omega)$ are a Fourier transform pair, then
+\[
+\int_{-\infty}^{\infty} | x(t) | ^2 dt = \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(j\omega)| ^2 d\omega
+\]
+
+which can be seen via 
+\begin{align}
+  \int_{-\infty}^{\infty} |x(t)|^2 dt  &= \int_{-\infty}^{\infty} x(t)x^*(t) dt \\
+  &= \int_{-\infty}^{\infty} x(t) \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} X^*(j\omega) e^{-j\omega t} d\omega \right] dt && \text{apply inverse FT} \\
+  &=  \frac{1}{2\pi} \int_{-\infty}^{\infty} X^*(j\omega) \left[ \int_{-\infty}^{\infty} x(t) e^{-j\omega t} dt \right] d\omega && \text{Swap order of integration}\\
+&= \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(j\omega)| ^2 d\omega && \text{bracket term is FT} \\ 
+\end{align}
+
+Thus the total energy in a singal may be found by computing the energy per unit time $|x(t)|^2$ and integrating over all time or computing the energy per unit frequency $|X(j\omega)|^2 / 2\pi$ and integrating over all frequencies. 
+
+\subsection{Duality}
+\fxwarning{Do This}
+
+\subsection{Multiplication in the time domain}
+
+We saw that convolution in the time domain corresponds to multiplication in the frequency domain. Because of duality, we expect the dual property to hold -- multiplication in the time domain is equivalent to convolution in the frequency domain. 
+\[
+r(t) = s(t)p(t) \ftarrow R(j\omega) = \frac{1}{2\pi}[S(j\omega) * P(j\omega)]
+\]
+
+Multiplication of one signal by another can be viewed as modulating the amplitude of one
+signal by another. 
 
 
 \section{An introduction to Filtering}
 \fxwarning{Give audio example}
 
-
+\subsection{Bandwidth and Phase}
 
 
 
 \section{Magnitude and Phase}
+
+We often write complex numbers as a real part and an imaginary part, 
+\[
+z = x + j y
+\]
+
+but we can also write them in polar form, 
+\[
+r = |z| = \sqrt{x^2 + y^2}
+\]
+
+\[
+\phi = \operatorname{arg}(z) = \operatorname{atan2} (y, x)
+\]
+
+and then we arrive at $ = r e^{j\phi}$ 
+
+
 Like all complex-valued functions, we can represent the complex-valued Fourier transform 
 in terms of magnitude and phase:
 
@@ -203,8 +249,18 @@ so the signals $x(t)$ and $x(-t)$ have the same magnitude fourier transform but
 very different phases! 
 
 
-% this is all saved for next time
-% % \section{The Discrete Fourier Transform}
+\section{The Discrete Fourier Transform}
+
+\[
+x[n] = \frac{1}{2\pi}\int_{2\pi} X(e^{jw})e^{j\omega n} d\omega
+\]
+
+\[
+X(e^{j\omega}) = \sum_{n=-\infty}^{\infty} x[n] e^{-j\omega n}
+\]
+This looks a lot more like an inner product!
+
+Remember from before : Discrete-time complex expoenntntials that differe in frequency by a multiple of 2pi are identicial. Thus $X(e^{j\omega})$ is periodic with period $2\pi$. 
 
 
 % %\section{The Fast Fourier Transform}
